@@ -1,6 +1,6 @@
 # ReturnCode
 
-**ReturnCode** is a very simple Maxscript class *(read struct)*, which when used in conjuonction with the *pattern* defined bellow,  allow for *simpler*, *faster*, *easier* to *debug*, code.
+**ReturnCode** is a very simple Maxscript class *(read struct)*, which when used in conjuonction with the *pattern* defined bellow,  allow for *simpler*, ***faster*** (10x?!), *easier* to *debug*, code.
 
 
 ###### Full source code
