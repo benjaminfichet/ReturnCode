@@ -23,3 +23,4 @@ struct ReturnCode (
 )
 ```
 Simple enough..
+You may want to read NOTE_ON_RETURNS.md
