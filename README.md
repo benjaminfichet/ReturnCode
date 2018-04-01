@@ -2,27 +2,24 @@
 
 ReturnCode is a very simple class (read struct), which when used with the simple pattern defined bellow, should allow for simpler, faster, less error prone, code.
 
+Here is the full source code! Yeah, impressive!
 
-```plantuml
-Bob -> Alice : hello
-Alice -> Bob : Go Away
-```
+```maxscript
 
+/* Class: ReturnCode */
+struct ReturnCode (
 
-![Alt text](https://g.gravizo.com/svg?
-  digraph G {
-    aize ="4,4";
-    main [shape=box];
-    main -> parse [weight=8];
-    parse -> execute;
-    main -> init [style=dotted];
-    main -> cleanup;
-    execute -> { make_string; printf}
-    init -> make_string;
-    edge [color=red];
-    main -> printf [style=bold,label="100 times"];
-    make_string [label="make a string"];
-    node [shape=box,style=filled,color=".7 .3 1.0"];
-    execute -> compare;
-  }
+	-- Variable: ret
+    -- The main return code, usually a boolean.
+	ret = undefined,
+	
+	-- Variable: data
+    -- Used to bring back data from the called functions. If any data is to be returned the function must store it in here.
+	data = undefined,
+
+	-- Variable: reason
+    -- Usually used when this.ret is false, allows human reabable informations to flow through the calls, allowing powerful debug. 
+	reason = undefined
 )
+
+```
