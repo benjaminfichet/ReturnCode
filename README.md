@@ -23,4 +23,4 @@ struct ReturnCode (
 )
 ```
 Simple enough..
-You may want to read [the node on return performances](NOTE_ON_RETURNS.md)
+You may want to read [the note on return(s) performances](NOTE_ON_RETURNS.md)
