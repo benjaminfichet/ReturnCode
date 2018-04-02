@@ -55,7 +55,7 @@ fn advimplicitfunc_first a b = (
 
 -- bench
 (
-	local bench_iterations = 100000
+	local bench_iterations = 1000000
 
 	format "Preparing 2 datasets of % random entry.." (bench_iterations as string)
 	local random_set_a = for i=1 to bench_iterations collect (random 0 bench_iterations)
