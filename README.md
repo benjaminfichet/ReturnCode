@@ -1,7 +1,7 @@
 
 
 # ReturnCode
-**ReturnCode** is a very simple Maxscript class/*struct* used to carry informations through functions returns in a nice clean structured way.
+**ReturnCode** is a very simple Maxscript class/*struct* used to carry informations through functions returns in a nice clean structured way. *(I'm looking at you who use multidimmensional arrays to return statecodes+values! ;)*
 
 
 ```maxscript
@@ -27,7 +27,6 @@ Simple enough..
 
 ## A note on the return operator
 
-## Maxscript
 **Maxscript's *return operator*** performances are bad, really bad. This is said to be caused by the use of C++ exceptions. 
 The recommanded way to bypass the performances hit is to use ***implicit returns*** instead of the regular **return** *ie. carrying and modifiying a return variable through your function, to finally push it on the last line of the function declaration.*
 
@@ -59,13 +58,32 @@ Please see Benchmark.ms by yourself.
 ```maxscript
 Preparing 2 datasets of 1000000 random entry..ok!
 Running Mxs return operator code..        took: 11865 milliseconds to run!
-Running implicit return code..            took: 1020 milliseconds to run!
-Running implicit return with ReturnCode.. took: 1688 milliseconds to run!
+Running implicit return code..            took: 1020  milliseconds to run!
 ```
-The performance boost looks quite interesting. (~7/8x faster ?!)
+
+Ok fine, but what about **ReturnCode** ?
+
+```maxscript
+fn implReturnCodeFunction = (
+	local myReturn = ReturnCode ret:false -- or ret:(aCondition())
+	
+	-- ...
+	if (something())         then (myReturn.data = "Avalue")
+	if (not somethingElse()) then (myReturn.data = #AnotherValue)
+
+	-- myReturn.ret = true -- or better :(evaluateACondition()) -- set back a meaning ret code
+	myReturn -- last line 
+)
+```
+```maxscript
+Running implicit return with ReturnCode.. took: 1688  milliseconds to run!
+```
+The performance boost is still quite interesting even if the returns are high level objects encapsulating a lot of data.
+
+
 
 ## Real world use
-Here is a real world function using implicit return in conjunction with the ReturnCode class to carry out more informations.
+Here is a real world documented function using implicit return in conjunction with a ReturnCode.
 
 ```maxscript
 -- ...
@@ -99,12 +117,36 @@ fn publish request = (
 					if ret.ret then (Use ret.data as the function succeeded)
 					else            (Use ret.reason to know why the function failed)*/
 
-			-- Here we define the reason for the fails.
+			-- Here we define the reason for (not publication.exists()) and (publication.writable()) fail.
 			)else(ret.reason = "publication file must not exist prior to publishing and dir must be writable")
 		)
 	)
-	ret
+	ret -- Implicit return the ReturnCode
 ),
 
 -- ...
 ```
+
+The key point here is that any function returning a ReturnCode must include a reason if the ret param is set to false.
+This allows the ReturnCode(s) to flow through the functions, as deep as they go, while still retaining informations.
+
+Let's say :
+```maxscript
+myret = publish aRequestObject
+```
+and that myret.ret is now equal to false.
+```maxscript
+myret 
+>> (ReturnCode ret:false data:undefined reason:"publication file must not exist prior to publishing and dir must be writable")
+```
+Or maybe..
+```maxscript
+myret 
+>> (ReturnCode ret:false data:undefined reason:"Unable to create a filename for the given request.")
+```
+etc.
+
+
+## Conclusions
+- Never use Maxscript's **return** operator when an implicit pattern is do-able.
+- Even using a high level object (**ReturnCode**) as return is quite faster than vanilla **return**.
