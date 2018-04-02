@@ -82,7 +82,7 @@ The performance boost is still quite interesting even if the returns are high le
 
 
 
-## Real world use
+## Why use ReturnCode ? 
 Here is a real world documented function using implicit return in conjunction with a ReturnCode.
 
 ```maxscript
