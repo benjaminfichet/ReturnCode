@@ -150,4 +150,4 @@ etc.
 ## Conclusions
 - Never use Maxscript's **return** operator when an implicit pattern is do-able.
 - Even using a high level object (**ReturnCode**) as return is quite faster than vanilla **return**.
-- Using *ReturnCode*s allow for easier debug.
+- Using *ReturnCode*s allows for easier debugs.
