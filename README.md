@@ -13,12 +13,11 @@ struct ReturnCode (
 	ret = undefined,
 	
 	-- Variable: data
-	-- Used to bring back data from the called functions. 
-	-- If any data is to be returned the function must store it in here, and set ret to true to indicate that it did well.
+	-- Usually used to bring back data. 
 	data = undefined,
 
 	-- Variable: reason
-	-- Usually used when this.ret is false, allows human reabable informations to flow through the calls, allowing powerful debug. 
+	-- Use it to bring up debug codes or whatever you need. 
 	reason = undefined
 )
 ```
