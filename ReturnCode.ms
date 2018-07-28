@@ -17,7 +17,7 @@
 */
 struct ReturnCode (
 
-	-- Variable: ret
+    -- Variable: ret
     -- public - The main return code, usually a boolean.
 	ret = undefined,
 	
