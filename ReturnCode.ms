@@ -2,18 +2,7 @@
 
 /** 
 	struct ReturnCode
-
 	Very basic yet powerful return-able objects.
-	Use it with -implicit return- type patterns for maximal performances.
-
-	fn aDummyFunc = (
-		local ret = ReturnCode.new (anotherFunctionReturningABoolean()) err_reason:"The func returned false"
-		if ret.ret then (
-			-- ...
-		)
-		ret -- implicit return for max. perf. + return comes from the innerFunction call!
-	)
-
 */
 struct ReturnCode (
 
@@ -21,15 +10,15 @@ struct ReturnCode (
     -- public - The main return code, usually a boolean.
 	ret = undefined,
 	
-	-- Variable: data
+    -- Variable: data
     -- public - Let's say the return code is true, then maybe you want to return some data. Put it here 
 	data = undefined,
 
-	-- Variable: ret
+    -- Variable: ret
     -- public - In case the ret code is false, then maybe the function left a reason for the fail. Put it here. 
 	reason = undefined,
 
-	-- Instances a new ReturnCode, helps define err_reason early in code, err_reason is wiped if bool evaluates to true
+    -- Instances a new ReturnCode, helps define err_reason early in code, err_reason is wiped if bool evaluates to true
 	/* 
 	eg.:
 		local ret = ReturnCode.new (aTestFunction()) err_reason:"The aTestFunction() failed!"
@@ -37,14 +26,8 @@ struct ReturnCode (
 	*/
 	fn new bool err_reason:undefined ok_reason:undefined ok_data:undefined err_data:undefined = (
 		local ret = ReturnCode ret:(bool)
-		if ret.ret then (
-			ret.data   = ok_data
-			ret.reason = ok_reason
-		)
-		else (
-			ret.data   = err_data
-			ret.reason = err_reason
-		)
+		if ret.ret then (ret.data = ok_data;  ret.reason = ok_reason;)
+		else            (ret.data = err_data; ret.reason = err_reason;)
 		ret
 	),
 

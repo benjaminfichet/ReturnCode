@@ -1,23 +1,35 @@
 # ReturnCode
-**ReturnCode** is a very simple Maxscript class/*struct* used to carry informations through functions returns in a nice clean structured way. *(I'm looking at you who use multidimmensional arrays to return statecodes+values! ;)*
+**ReturnCode** is a very basic yet powerful Maxscript *class*/*struct*/*object* return-able *object*.
+The main benefit of using it is that it helps define a very simple pattern to get the best of *Maxscript's implicit returns* while still bringing up lot of data from deep function calls without sacrifying performances.
 
+Please have a look at [this document on return operations in maxscript](https://www.google.com).
+The code is about 30 lines /whitespaces included/, pretty simple.
 
-```maxscript
-/* Class: ReturnCode */
-struct ReturnCode (
-
-	-- Variable: ret
-	-- The main return code, usually a boolean.
-	ret = undefined,
+Directly taken from another library (commented):
+```lua
+	function validateTag tag = (
+		ReturnCode.new ((tag.hasAttribute "type") and (tag.hasAttribute "subanim")) \
+		err_reason:"Invalid tag: A KitConstraintModel needs at least a type and a subanim path."
+	)
 	
-	-- Variable: data
-	-- Usually used to bring back data. 
-	data = undefined,
-
-	-- Variable: reason
-	-- Use it to bring up debug codes or whatever you need. 
-	reason = undefined
-)
+	function load xml_tag = (
+		local ret = validateTag(xml_tag) -- validateTag returns a ReturnCode.
+		if ret.ret then (
+		
+            -- reuse ret, to implicit return "ret"
+			ret = anotherFunction() 
+			if ret.ret then (
+			
+			    [...] -- continue pattern
+			    
+			    
+			) -- if _anotherFunction() fails, the returned ret will be _anotherFunction's one.
+        )
+        -- Always use implicit return to bring informations back!
+        -- If __validateTag failed, ret.reason here will be equal to __validateTag's err_reason.
+		ret 
+	) -- end fn __load 
 ```
-Simple enough..
-See dev branch for upcoming goodies!
+
+
+
