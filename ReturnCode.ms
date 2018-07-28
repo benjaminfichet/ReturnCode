@@ -1,22 +1,39 @@
+
+
+/** 
+	struct ReturnCode
+
+	Very basic yet powerful return-able objects.
+	Use it with -implicit return- type patterns for maximal performances.
+
+	fn aDummyFunc = (
+		local ret = ReturnCode.new (anotherFunctionReturningABoolean()) err_reason:"The func returned false"
+		if ret.ret then (
+			-- ...
+		)
+		ret -- implicit return for max. perf. + return comes from the innerFunction call!
+	)
+
+*/
 struct ReturnCode (
 
 	-- Variable: ret
-    -- public - The main return code, usually a boolean. Can be something else for specific purposes.
+    -- public - The main return code, usually a boolean.
 	ret = undefined,
 	
-
 	-- Variable: data
-    -- public - Let's say the return code is set as true, then maybe you want to return some data ? It is it here. 
+    -- public - Let's say the return code is true, then maybe you want to return some data. Put it here 
 	data = undefined,
 
 	-- Variable: ret
-    -- public - In case the ret code is set to false, then maybe the function did leave a reason for the fail ? It is it here. 
+    -- public - In case the ret code is false, then maybe the function left a reason for the fail. Put it here. 
 	reason = undefined,
 
-	-- Instance a new ReturnCode, helps define err_reason early in code, err_reason is wiped if bool evaluates to true
-	/*eg.
-		local ret = (ReturnCode()).new (aTest()) err_reason:"The aTest failed!"
-		-- If aTest() failed, ret.reason will be set to err_reason:, not if not, same for ok_reason, ok_data, err_data
+	-- Instances a new ReturnCode, helps define err_reason early in code, err_reason is wiped if bool evaluates to true
+	/* 
+	eg.:
+		local ret = ReturnCode.new (aTestFunction()) err_reason:"The aTestFunction() failed!"
+		-- If aTestFunction() failed, ret.reason will be set to err_reason:, ret.data will be err_data, same goes for ok_reason, ok_data
 	*/
 	fn new bool err_reason:undefined ok_reason:undefined ok_data:undefined err_data:undefined = (
 		local ret = ReturnCode ret:(bool)
