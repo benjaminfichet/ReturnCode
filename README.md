@@ -3,8 +3,6 @@
 The main benefit of using it is that it helps define a very simple pattern to get the best of *Maxscript's implicit returns* while being able to return data from deep function calls.
 
 The code is about 30 lines /whitespaces included/, pretty simple, yet powerful. Check benchmarks script.
-
-Directly taken from another library (commented):
 ```lua
 /** 
 	struct ReturnCode
